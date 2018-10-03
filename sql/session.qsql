@@ -1,0 +1,10 @@
+# settings = { auditCols: true, language: "EN", APEX: true, createdCol: "created_on", updatedCol: "updated_on" }
+
+sessions
+  session_start d
+  session_end d
+  track
+  track_color
+  title
+  location
+

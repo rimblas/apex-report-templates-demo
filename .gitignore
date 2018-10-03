@@ -1,8 +1,4 @@
-# Compiled Form Modules
-*.fmx
-
-# Compiled Menu Modules
-*.mmx
-
-# Compiled Pre-Linked Libraries
-*.plx
+.DS_Store
+tmp
+bin/*.sublime-workspace
+bin/*.sublime-project

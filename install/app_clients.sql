@@ -1,0 +1,8 @@
+REM INSERTING into APP_CLIENTS
+SET DEFINE OFF;
+Insert into APP_CLIENTS (ID,PARENT_ID,CLIENT_NO,NAME,STATUS_CODE,ACTIVE_IND) values (41,null,'123','ABC Plc','Potential','Y');
+Insert into APP_CLIENTS (ID,PARENT_ID,CLIENT_NO,NAME,STATUS_CODE,ACTIVE_IND) values (81,null,'test','New','Potential','N');
+Insert into APP_CLIENTS (ID,PARENT_ID,CLIENT_NO,NAME,STATUS_CODE,ACTIVE_IND) values (101,null,'2','Apple','Approved','Y');
+Insert into APP_CLIENTS (ID,PARENT_ID,CLIENT_NO,NAME,STATUS_CODE,ACTIVE_IND) values (161,null,'9','j','Pending','N');
+Insert into APP_CLIENTS (ID,PARENT_ID,CLIENT_NO,NAME,STATUS_CODE,ACTIVE_IND) values (2,null,'1000','Acme','New','Y');
+

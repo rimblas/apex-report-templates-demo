@@ -27,7 +27,7 @@ prompt APPLICATION 89361 - Themes & Templates App
 -- Application Export:
 --   Application:     89361
 --   Name:            Themes & Templates App
---   Date and Time:   18:05 Wednesday October 3, 2018
+--   Date and Time:   20:08 Friday October 5, 2018
 --   Exported By:     JORGE@RIMBLAS.COM
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -69,7 +69,7 @@ prompt APPLICATION 89361 - Themes & Templates App
 --     Reports:
 --     E-Mail:
 --   Supporting Objects:  Included
---     Install scripts:          4
+--     Install scripts:          5
 
 prompt --application/delete_application
 begin
@@ -113,7 +113,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'EDIT_BUTTON'
 ,p_substitution_value_01=>'<i class="fa fa-pencil-square-o cfa-1_5x"></i>'
 ,p_last_updated_by=>'JORGE@RIMBLAS.COM'
-,p_last_upd_yyyymmddhh24miss=>'20181003180414'
+,p_last_upd_yyyymmddhh24miss=>'20181005200718'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_ui_type_name => null
 );
@@ -15710,6 +15710,128 @@ wwv_flow_api.create_install_object(
 );
 end;
 /
+prompt --application/deployment/install/install_client_objects_2
+begin
+wwv_flow_api.create_install_script(
+ p_id=>wwv_flow_api.id(3022091436059136367)
+,p_install_id=>wwv_flow_api.id(1568118525188471465)
+,p_name=>'Client Objects 2'
+,p_sequence=>25
+,p_script_type=>'INSTALL'
+,p_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'create sequence app_clients_seq start with 200',
+'/',
+'create sequence app_client_no_seq start with 200',
+'/',
+'',
+'create or replace trigger  app_clients_iu ',
+'before insert or update',
+'on app_clients',
+'referencing old as old new as new',
+'for each row',
+'begin',
+'  if inserting then',
+'    if :new.id is null then',
+'       :new.id := app_clients_seq.nextval;',
+'    end if;',
+'    if :new.client_no is null then',
+'       :new.client_no := app_client_no_seq.nextval;',
+'    end if;',
+'    :new.created_on := sysdate;',
+'    :new.created_by := nvl(v(''APP_USER''),user);',
+'  elsif updating then',
+'    :new.updated_on := sysdate;',
+'    :new.updated_by := nvl(v(''APP_USER''),user);',
+'  end if;',
+'end;',
+'/',
+'',
+'create sequence app_contact_roles_seq start with 10;',
+'',
+'create or replace trigger  app_contact_roles_iu ',
+'before insert or update',
+'on app_contact_roles',
+'referencing old as old new as new',
+'for each row',
+'begin',
+'  if inserting then',
+'    if :new.id is null then',
+'      :new.id := app_contact_roles_seq.nextval;',
+'    end if;',
+'    :new.created_on := sysdate;',
+'    :new.created_by := nvl(v(''APP_USER''),user);',
+'  elsif updating then',
+'    :new.updated_on := sysdate;',
+'    :new.updated_by := nvl(v(''APP_USER''),user);',
+'  end if;',
+'end;',
+'/',
+'',
+'create sequence app_party_seq start with 100;',
+'',
+'create or replace trigger app_party_iu',
+'before insert or update',
+'on app_party',
+'referencing old as old new as new',
+'for each row',
+'begin',
+'  if inserting then',
+'    if :new.id is null then',
+'      :new.id := app_party_seq.nextval;',
+'    end if;',
+'    :new.created_on := sysdate;',
+'    :new.created_by := nvl(v(''APP_USER''),user);',
+'  elsif updating then',
+'    :new.updated_on := sysdate;',
+'    :new.updated_by := nvl(v(''APP_USER''),user);',
+'  end if;',
+'end;',
+'/',
+'',
+'create sequence app_client_contacts_seq start with 100;',
+'',
+'create or replace trigger app_client_contacts_iu ',
+'before insert or update',
+'on app_client_contacts',
+'referencing old as old new as new',
+'for each row',
+'begin',
+'  if inserting then',
+'    if :new.id is null then',
+'      :new.id := app_client_contacts_seq.nextval;',
+'    end if;',
+'    :new.created_on := sysdate;',
+'    :new.created_by := nvl(v(''APP_USER''),user);',
+'  elsif updating then',
+'    :new.updated_on := sysdate;',
+'    :new.updated_by := nvl(v(''APP_USER''),user);',
+'  end if;',
+'end;',
+'/',
+'',
+'create sequence app_email_phone_types_seq start with 10;',
+'',
+'create or replace trigger app_email_phone_types_iu ',
+'before insert or update',
+'on app_email_phone_types',
+'referencing old as old new as new',
+'for each row',
+'begin',
+'  if inserting then',
+'    if :new.id is null then',
+'      :new.id := app_email_phone_types_seq.nextval;',
+'    end if;',
+'    :new.created_on := sysdate;',
+'    :new.created_by := nvl(v(''APP_USER''),user);',
+'  elsif updating then',
+'    :new.updated_on := sysdate;',
+'    :new.updated_by := nvl(v(''APP_USER''),user);',
+'  end if;',
+'end;',
+'/'))
+);
+end;
+/
 prompt --application/deployment/install/install_books
 begin
 wwv_flow_api.create_install_script(
@@ -15782,6 +15904,14 @@ wwv_flow_api.create_install_script(
 'Insert into APP_CLIENT_CONTACTS (ID,PARTY_ID,CLIENT_ID,CONTACT_ROLE_CODE,ACTIVE_IND) values (1,1,2,''BOSS'',''Y'');',
 'Insert into APP_CLIENT_CONTACTS (ID,PARTY_ID,CLIENT_ID,CONTACT_ROLE_CODE,ACTIVE_IND) values (41,41,2,''ACCOUNTS'',''Y'');',
 '',
+'insert into app_email_phone_types(id,display_seq,entry_type,code,name,active_ind) values (1, 10, ''PHONE'',''MAIN'',''Main'',''Y'');',
+'insert into app_email_phone_types(id,display_seq,entry_type,code,name,active_ind) values (2, 20, ''PHONE'',''DIRECT'',''Direct'',''Y'');',
+'insert into app_email_phone_types(id,display_seq,entry_type,code,name,active_ind) values (3, 30, ''PHONE'',''PERSONAL'',''Personal'',''Y'');',
+'insert into app_email_phone_types(id,display_seq,entry_type,code,name,active_ind) values (4, 40, ''PHONE'',''CELL'',''Cell'',''Y'');',
+'insert into app_email_phone_types(id,display_seq,entry_type,code,name,active_ind) values (5, 50, ''PHONE'',''FAX'',''Fax'',''Y'');',
+'insert into app_email_phone_types(id,display_seq,entry_type,code,name,active_ind) values (6, 60, ''EMAIL'',''MAIN'',''Main'',''Y'');',
+'insert into app_email_phone_types(id,display_seq,entry_type,code,name,active_ind) values (7, 70, ''EMAIL'',''DIRECT'',''Direct'',''Y'');',
+'insert into app_email_phone_types(id,display_seq,entry_type,code,name,active_ind) values (8, 80, ''EMAIL'',''PERSONAL'',''Personal'',''Y'');',
 ''))
 );
 end;

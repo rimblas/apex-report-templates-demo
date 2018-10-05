@@ -27,7 +27,7 @@ prompt APPLICATION 89361 - Themes & Templates App
 -- Application Export:
 --   Application:     89361
 --   Name:            Themes & Templates App
---   Date and Time:   20:08 Friday October 5, 2018
+--   Date and Time:   20:23 Friday October 5, 2018
 --   Exported By:     JORGE@RIMBLAS.COM
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -113,7 +113,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'EDIT_BUTTON'
 ,p_substitution_value_01=>'<i class="fa fa-pencil-square-o cfa-1_5x"></i>'
 ,p_last_updated_by=>'JORGE@RIMBLAS.COM'
-,p_last_upd_yyyymmddhh24miss=>'20181005200718'
+,p_last_upd_yyyymmddhh24miss=>'20181005202238'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_ui_type_name => null
 );
@@ -15455,8 +15455,30 @@ begin
 wwv_flow_api.create_install(
  p_id=>wwv_flow_api.id(1568118525188471465)
 ,p_deinstall_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'',
+'drop table books;',
 'drop table app_todos;',
-'drop table books;'))
+'',
+'drop table app_roles;',
+'drop sequence app_roles_seq;',
+'',
+'drop table app_email_phone_types;',
+'drop sequence app_email_phone_types_seq;',
+'',
+'drop table app_client_contacts;',
+'drop sequence app_client_contacts_seq;',
+'',
+'drop table app_party;',
+'drop sequence app_party_seq;',
+'',
+'drop table app_contact_roles;',
+'drop sequence app_contact_roles_seq;',
+'',
+'drop table app_clients;',
+'drop sequence app_clients_seq;',
+'drop sequence app_client_no_seq;',
+'',
+''))
 );
 end;
 /
@@ -15828,7 +15850,29 @@ wwv_flow_api.create_install_script(
 '    :new.updated_by := nvl(v(''APP_USER''),user);',
 '  end if;',
 'end;',
-'/'))
+'/',
+'',
+'create sequence app_roles_seq start with 10;',
+'',
+'create or replace trigger app_roles_iu',
+'before insert or update',
+'on app_roles',
+'referencing old as old new as new',
+'for each row',
+'begin',
+'  if inserting then',
+'    if :new.id is null then',
+'      :new.id := app_roles_seq.nextval;',
+'    end if;',
+'    :new.created_on := sysdate;',
+'    :new.created_by := nvl(v(''APP_USER''),user);',
+'  elsif updating then',
+'    :new.updated_on := sysdate;',
+'    :new.updated_by := nvl(v(''APP_USER''),user);',
+'  end if;',
+'end;',
+'/',
+''))
 );
 end;
 /

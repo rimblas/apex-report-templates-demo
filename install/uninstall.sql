@@ -1,4 +1,5 @@
 
+drop table books purge;
 drop table app_todos purge;
 
 drop table app_roles purge;

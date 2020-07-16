@@ -9,4 +9,8 @@ You can find and run this app at <a target="_blank" href="https://apex.oracle.co
 
 ![Alt text](/preview.png?raw=true "Preview")
 
+## Requirements
+The Sample Database Application should be installed because the table `demo_product_info` is used by some reports.
+
+
 *License:* **MIT** <http://www.opensource.org/licenses/mit-license.php>
